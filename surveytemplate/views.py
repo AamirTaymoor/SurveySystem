@@ -3,10 +3,14 @@ from .models import SurveyTemplates
 from django.views.generic import ListView, TemplateView
 # Create your views here.
 
-class TemplateListVew(ListView):
-    """"Displays all Templates"""
-    model = SurveyTemplates
-    template_name = ""
-
 class HomeView(TemplateView):
-    template_name = "index.html"
+    """Home Page"""
+    template_name = "surveytemplate/index.html"
+
+
+class TemplateListVew(ListView):
+    """"List all Templates"""
+    model = SurveyTemplates
+    template_name = "surveytemplate/listtemplate.html"
+
+

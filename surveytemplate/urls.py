@@ -4,5 +4,5 @@ from . import views
 urlpatterns = [
     
     path('home/',views.HomeView.as_view(), name='home'),
-    path('templates',views.TemplateListVew.as_view()),
+    path('templates/',views.TemplateListVew.as_view()),
 ]
