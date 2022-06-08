@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import SurveyTemplates
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, CreateView, UpdateView, DeleteView
 # Create your views here.
 
 class HomeView(TemplateView):
@@ -13,4 +13,17 @@ class TemplateListVew(ListView):
     model = SurveyTemplates
     template_name = "surveytemplate/listtemplate.html"
 
+class CreateTemplate(CreateView):
+     model = SurveyTemplates
+     fields = ['template_name','subject','body','is_active']
+     success_url = '/templates'
+
+class EditTemplate(UpdateView):
+    model = SurveyTemplates
+    fields = ['template_name','subject','body','is_active']
+    success_url = '/templates'
+
+class DeleteTemplate(DeleteView):
+    model = SurveyTemplates
+    success_url = '/templates'
 

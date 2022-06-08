@@ -67,9 +67,9 @@
 <!--end::Dropdown-->
 
 <!--begin::Button-->
-<a href="#" class="btn btn-primary font-weight-bolder">
+<a href="{% url 'create'%}" class="btn btn-primary font-weight-bolder">
 	<i class="la la-plus"></i>
-	New Record
+	Create Template
 </a>
 <!--end::Button-->
 		</div>
@@ -79,303 +79,30 @@
 		<table class="table table-separate table-head-custom table-checkable" id="kt_datatable">
 			                    <thead>
                               <tr>
-                                              <th>Record ID</th>
-                                              <th>Order ID</th>
-                                              <th>Country</th>
-                                              <th>Ship City</th>
-                                              <th>Ship Address</th>
-                                              <th>Company Agent</th>
-                                              <th>Company Name</th>
-                                              <th>Ship Date</th>
-                                              <th>Status</th>
-                                              <th>Type</th>
+                                             
+                                              <th>Template Name</th>
+                                              <th>Subject</th>
+                                              <th>Is Active</th>
+                                              <th>Created On</th>
+                                              <th>Updated On</th>
                                               <th>Actions</th>
                                   </tr>
                     </thead>
 
                         <tbody>
+							{% for record in object_list %}
                             <tr>
-                                              <td>1</td>
-                                              <td>64616-103</td>
-                                              <td>Brazil</td>
-                                              <td>São Félix do Xingu</td>
-                                              <td>698 Oriole Pass</td>
-                                              <td>Hayes Boule</td>
-                                              <td>Casper-Kerluke</td>
-                                              <td>10/15/2017</td>
-                                              <td>5</td>
-                                              <td>1</td>
-                                              <td nowrap></td>
-                                  </tr>
-                     
-                      
-                        
-                            <tr>
-                                              <td>8</td>
-                                              <td>76328-333</td>
-                                              <td>Portugal</td>
-                                              <td>Sobreira</td>
-                                              <td>6715 Dakota Parkway</td>
-                                              <td>Cob Sedwick</td>
-                                              <td>Homenick-Nolan</td>
-                                              <td>2/18/2016</td>
-                                              <td>3</td>
-                                              <td>2</td>
-                                              <td nowrap></td>
-                                  </tr>
-                            <tr>
-                                              <td>9</td>
-                                              <td>21130-054</td>
-                                              <td>France</td>
-                                              <td>Roissy Charles-de-Gaulle</td>
-                                              <td>4942 Darwin Hill</td>
-                                              <td>Tabby Callaghan</td>
-                                              <td>Daugherty-Considine</td>
-                                              <td>3/26/2016</td>
-                                              <td>2</td>
-                                              <td>2</td>
-                                              <td nowrap></td>
-                                  </tr>
-                            <tr>
-                                              <td>10</td>
-                                              <td>68788-9890</td>
-                                              <td>Dominican Republic</td>
-                                              <td>Cristóbal</td>
-                                              <td>854 Dapin Terrace</td>
-                                              <td>Broddy Jarry</td>
-                                              <td>Walter Group</td>
-                                              <td>8/10/2016</td>
-                                              <td>1</td>
-                                              <td>2</td>
-                                              <td nowrap></td>
-                                  </tr>
-                            <tr>
-                                              <td>11</td>
-                                              <td>68428-740</td>
-                                              <td>Morocco</td>
-                                              <td>Tidili Mesfioua</td>
-                                              <td>67 Talisman Drive</td>
-                                              <td>Marjorie McGougan</td>
-                                              <td>Littel and Sons</td>
-                                              <td>2/8/2016</td>
-                                              <td>6</td>
-                                              <td>1</td>
-                                              <td nowrap></td>
-                                  </tr>
-                            <tr>
-                                              <td>12</td>
-                                              <td>43269-779</td>
-                                              <td>Yemen</td>
-                                              <td>Az Zāhir</td>
-                                              <td>5583 Walton Hill</td>
-                                              <td>Edsel Sprigging</td>
-                                              <td>Kulas, Huels and Strosin</td>
-                                              <td>11/13/2017</td>
-                                              <td>6</td>
-                                              <td>3</td>
-                                              <td nowrap></td>
-                                  </tr>
-                            <tr>
-                                              <td>13</td>
-                                              <td>0573-0174</td>
-                                              <td>Armenia</td>
-                                              <td>Doghs</td>
-                                              <td>7024 Eagan Court</td>
-                                              <td>Jess Gouldeby</td>
-                                              <td>Moen Group</td>
-                                              <td>9/10/2017</td>
-                                              <td>5</td>
-                                              <td>1</td>
-                                              <td nowrap></td>
-                                  </tr>
-                            <tr>
-                                              <td>14</td>
-                                              <td>67868-117</td>
-                                              <td>Indonesia</td>
-                                              <td>Pakemitan</td>
-                                              <td>141 Spaight Avenue</td>
-                                              <td>Marys Matzl</td>
-                                              <td>Emard-Gerhold</td>
-                                              <td>3/5/2016</td>
-                                              <td>2</td>
-                                              <td>3</td>
-                                              <td nowrap></td>
-                                  </tr>
-                            <tr>
-                                              <td>15</td>
-                                              <td>0641-6114</td>
-                                              <td>Kazakhstan</td>
-                                              <td>Shu</td>
-                                              <td>601 Chinook Street</td>
-                                              <td>Gabrila Franscioni</td>
-                                              <td>Gusikowski LLC</td>
-                                              <td>6/21/2016</td>
-                                              <td>4</td>
-                                              <td>2</td>
-                                              <td nowrap></td>
-                                  </tr>
-                            <tr>
-                                              <td>16</td>
-                                              <td>63629-4970</td>
-                                              <td>Thailand</td>
-                                              <td>Chang Klang</td>
-                                              <td>7109 Ilene Place</td>
-                                              <td>Cozmo Booker</td>
-                                              <td>Dickinson-Klein</td>
-                                              <td>2/29/2016</td>
-                                              <td>1</td>
-                                              <td>3</td>
-                                              <td nowrap></td>
-                                  </tr>
-                            <tr>
-                                              <td>17</td>
-                                              <td>59528-4456</td>
-                                              <td>Canada</td>
-                                              <td>Melfort</td>
-                                              <td>141 Aberg Pass</td>
-                                              <td>Arlie Larking</td>
-                                              <td>Rosenbaum Group</td>
-                                              <td>7/7/2017</td>
-                                              <td>4</td>
-                                              <td>2</td>
-                                              <td nowrap></td>
-                                  </tr>
-                            <tr>
-                                              <td>18</td>
-                                              <td>0054-0080</td>
-                                              <td>Iceland</td>
-                                              <td>Sandgerði</td>
-                                              <td>4 Derek Alley</td>
-                                              <td>Yorker Scogings</td>
-                                              <td>Gorczany LLC</td>
-                                              <td>7/6/2017</td>
-                                              <td>2</td>
-                                              <td>3</td>
-                                              <td nowrap></td>
-                                  </tr>
-                            <tr>
-                                              <td>19</td>
-                                              <td>28475-810</td>
-                                              <td>Indonesia</td>
-                                              <td>Keleng</td>
-                                              <td>49 Swallow Court</td>
-                                              <td>Dominick Muscott</td>
-                                              <td>Swaniawski-Sipes</td>
-                                              <td>5/15/2016</td>
-                                              <td>2</td>
-                                              <td>2</td>
-                                              <td nowrap></td>
-                                  </tr>
-                            <tr>
-                                              <td>20</td>
-                                              <td>53645-1070</td>
-                                              <td>Russia</td>
-                                              <td>Tugulym</td>
-                                              <td>611 Hintze Place</td>
-                                              <td>Laurette Kynforth</td>
-                                              <td>Torp-Satterfield</td>
-                                              <td>10/18/2017</td>
-                                              <td>1</td>
-                                              <td>2</td>
-                                              <td nowrap></td>
-                                  </tr>
-                            <tr>
-                                              <td>21</td>
-                                              <td>66869-137</td>
-                                              <td>Indonesia</td>
-                                              <td>Binangun</td>
-                                              <td>535 Delladonna Trail</td>
-                                              <td>Beryl Lycett</td>
-                                              <td>Schoen Inc</td>
-                                              <td>6/28/2017</td>
-                                              <td>3</td>
-                                              <td>3</td>
-                                              <td nowrap></td>
-                                  </tr>
-                            <tr>
-                                              <td>22</td>
-                                              <td>0069-0181</td>
-                                              <td>Czech Republic</td>
-                                              <td>Tlumačov</td>
-                                              <td>8 Hauk Street</td>
-                                              <td>Carny Boggas</td>
-                                              <td>Kuphal LLC</td>
-                                              <td>6/24/2016</td>
-                                              <td>2</td>
-                                              <td>2</td>
-                                              <td nowrap></td>
-                                  </tr>
-                            <tr>
-                                              <td>23</td>
-                                              <td>50580-449</td>
-                                              <td>United States</td>
-                                              <td>Saint Augustine</td>
-                                              <td>9050 High Crossing Pass</td>
-                                              <td>Dyana Axelby</td>
-                                              <td>Runolfsdottir-Hayes</td>
-                                              <td>3/16/2017</td>
-                                              <td>2</td>
-                                              <td>1</td>
-                                              <td nowrap></td>
-                                  </tr>
-                            <tr>
-                                              <td>24</td>
-                                              <td>55714-2247</td>
-                                              <td>Netherlands</td>
-                                              <td>Nijmegen</td>
-                                              <td>2 Laurel Avenue</td>
-                                              <td>Orelle Duffy</td>
-                                              <td>Roberts and Sons</td>
-                                              <td>4/5/2016</td>
-                                              <td>5</td>
-                                              <td>3</td>
-                                              <td nowrap></td>
-                                  </tr>
-                            <tr>
-                                              <td>25</td>
-                                              <td>48951-1208</td>
-                                              <td>Russia</td>
-                                              <td>Ryazhsk</td>
-                                              <td>131 Lerdahl Park</td>
-                                              <td>Taylor Kinder</td>
-                                              <td>Terry-Howell</td>
-                                              <td>4/19/2017</td>
-                                              <td>3</td>
-                                              <td>1</td>
-                                              <td nowrap></td>
-                                  </tr>
-                            <tr>
-                                              <td>26</td>
-                                              <td>30142-179</td>
-                                              <td>Russia</td>
-                                              <td>Kazan</td>
-                                              <td>7 Erie Pass</td>
-                                              <td>Emanuele Aylesbury</td>
-                                              <td>Torp LLC</td>
-                                              <td>7/6/2017</td>
-                                              <td>3</td>
-                                              <td>1</td>
-                                              <td nowrap></td>
-                                  </tr>
-                            <tr>
-                                              <td>27</td>
-                                              <td>49349-025</td>
-                                              <td>Thailand</td>
-                                              <td>Bang Racham</td>
-                                              <td>98943 Schiller Pass</td>
-                                              <td>Dorie Gibke</td>
-                                              <td>Tremblay and Sons</td>
-                                              <td>7/17/2017</td>
-                                              <td>1</td>
-                                              <td>1</td>
-                                              <td nowrap></td>
-                                  </tr>
-                           
-                           
-            
-                         
-                      
-                          
+                                              <td>{{record.template_name}}</td>  
+                                              <td>{{record.subject}}</td>
+                                              <td>{{record.is_active}}</td>
+                                              <td>{{record.created_on}}</td>
+                                              <td>{{record.updated_on}}</td>
+                                              <td><a href="{% url 'edit' record.id %}"><i class="fas fa-edit text-success mr-5"></i></a>
+                                                <a href ="{% url 'delete' record.id %}"><i class="fad fa-trash text-danger mr-5"></i>
+                                                </a>
+                                              </td>
+                                 </tr> 
+								 {% endfor %}
                         </tbody>
 
         		</table>
