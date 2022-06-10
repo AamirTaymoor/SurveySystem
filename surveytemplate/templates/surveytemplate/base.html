@@ -7,9 +7,9 @@
     <head><base href="">
                 <meta charset="utf-8"/>
 					<title>Survey System</title>
-                <meta name="description" content="Metronic admin dashboard live demo. Check out all the features of the admin panel. A large number of settings, additional services and widgets. "/>
+                <meta name="description" content=""/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-		<link rel="canonical" href="https://keenthemes.com/metronic"/>
+		<link rel="canonical" href="#"/>
 
         <!--begin::Fonts-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>        <!--end::Fonts-->
@@ -45,7 +45,7 @@
 	<!--begin::Header Mobile-->
 <div id="kt_header_mobile" class="header-mobile align-items-center  header-mobile-fixed " >
 	<!--begin::Logo-->
-	<a href="index.html">
+	<a href="{% url 'home' %}">
 		<img alt="Logo" src="{% static 'surveytemplate/assets/media/logos/logo-light.png'%}"/>
 	</a>
 	<!--end::Logo-->
@@ -87,7 +87,7 @@
 	<!--begin::Brand-->
 	<div class="brand flex-column-auto " id="kt_brand">
 		<!--begin::Logo-->
-		<a href="index.html" class="brand-logo">
+		<a href="{% url 'home'%}" class="brand-logo">
 			<img alt="Logo" src="{% static 'surveytemplate/assets/media/logos/logo-light.png'%}"/>
 		</a>
 		<!--end::Logo-->
@@ -950,7 +950,7 @@
 		            <!--begin::Toggle-->
 		            <div class="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
 		                <div class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1">
-		                    <img class="h-20px w-20px rounded-sm" src="assets/media/svg/flags/226-united-states.svg" alt=""/>
+		                    <img class="h-20px w-20px rounded-sm" src="{% static 'surveytemplate/assets/media/svg/flags/226-united-states.svg'%}" alt=""/>
 		                </div>
 		            </div>
 		            <!--end::Toggle-->
@@ -963,7 +963,7 @@
     <li class="navi-item">
         <a href="#" class="navi-link">
             <span class="symbol symbol-20 mr-3">
-                <img src="assets/media/svg/flags/226-united-states.svg" alt=""/>
+                <img src="{% static 'surveytemplate/assets/media/svg/flags/226-united-states.svg'%}" alt=""/>
             </span>
             <span class="navi-text">English</span>
         </a>
@@ -974,7 +974,7 @@
     <li class="navi-item active">
         <a href="#" class="navi-link">
             <span class="symbol symbol-20 mr-3">
-                <img src="assets/media/svg/flags/128-spain.svg" alt=""/>
+                <img src="{% static 'surveytemplate/assets/media/svg/flags/128-spain.svg'%}" alt=""/>
             </span>
             <span class="navi-text">Spanish</span>
         </a>
@@ -985,7 +985,7 @@
     <li class="navi-item">
         <a href="#" class="navi-link">
             <span class="symbol symbol-20 mr-3">
-                <img src="assets/media/svg/flags/162-germany.svg" alt=""/>
+                <img src="{% static 'surveytemplate/assets/media/svg/flags/162-germany.svg'%}" alt=""/>
             </span>
             <span class="navi-text">German</span>
         </a>
@@ -996,7 +996,7 @@
     <li class="navi-item">
         <a href="#" class="navi-link">
             <span class="symbol symbol-20 mr-3">
-                <img src="assets/media/svg/flags/063-japan.svg" alt=""/>
+                <img src="{% static 'surveytemplate/assets/media/svg/flags/063-japan.svg'%}" alt=""/>
             </span>
             <span class="navi-text">Japanese</span>
         </a>
@@ -1007,7 +1007,7 @@
     <li class="navi-item">
         <a href="#" class="navi-link">
             <span class="symbol symbol-20 mr-3">
-                <img src="assets/media/svg/flags/195-france.svg" alt=""/>
+                <img src="{% static 'surveytemplate/assets/media/svg/flags/195-france.svg'%}" alt=""/>
             </span>
             <span class="navi-text">French</span>
         </a>
@@ -1195,9 +1195,9 @@
 
 		<!--begin::Nav-->
 		<div class="nav nav-dark">
-			<a href="http://keenthemes.com/metronic" target="_blank" class="nav-link pl-0 pr-5">About</a>
-			<a href="http://keenthemes.com/metronic" target="_blank" class="nav-link pl-0 pr-5">Team</a>
-			<a href="http://keenthemes.com/metronic" target="_blank" class="nav-link pl-0 pr-0">Contact</a>
+			<a href="#" target="_blank" class="nav-link pl-0 pr-5">About</a>
+			<a href="#" target="_blank" class="nav-link pl-0 pr-5">Team</a>
+			<a href="#" target="_blank" class="nav-link pl-0 pr-0">Contact</a>
 		</div>
 		<!--end::Nav-->
 	</div>

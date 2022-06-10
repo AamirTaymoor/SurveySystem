@@ -5,7 +5,7 @@ class SurveyTemplates(models.Model):
     template_name = models.CharField(max_length=40,null=False)
     subject = models.CharField(max_length=50,null=False)
     body = models.TextField()
-    is_active = models.BooleanField()
+    is_active = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 

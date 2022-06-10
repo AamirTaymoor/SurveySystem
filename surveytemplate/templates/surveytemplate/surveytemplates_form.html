@@ -2,7 +2,8 @@
 
 {% block content %}      
  <!--begin::Form-->
- <form method="POST">
+ <div class="container">
+ <form method="POST" class = "bg-white">
     <!-- Security token -->
     {% csrf_token %}
     <div class="card-body">	
@@ -25,10 +26,11 @@
         </div>
     </br>
         <label class="checkbox">
-            <input type="checkbox" name="Checkboxes1"/>
+            {{form.is_active}}
             <span> </span>
-            Is Active
+            &nbsp; Is Active
         </label>
+       
 
     </br>
         <div class="card-footer">
@@ -40,6 +42,7 @@
     
 </form>
 <!--end::Form-->
+</div>
 
 
 

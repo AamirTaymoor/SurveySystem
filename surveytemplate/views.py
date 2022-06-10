@@ -13,18 +13,22 @@ class TemplateListVew(ListView):
     """"List all Templates"""
     model = SurveyTemplates
     template_name = "surveytemplate/listtemplate.html"
+    
 
 class CreateTemplate(CreateView):
-     model = SurveyTemplates
-     form_class = CreateTemplateForm
-     success_url = '/templates'
+    """Create Template"""
+    model = SurveyTemplates
+    form_class = CreateTemplateForm
+    success_url = '/templates'
 
 class EditTemplate(UpdateView):
+    """Edit Template"""
     model = SurveyTemplates
     form_class = CreateTemplateForm
     success_url = '/templates'
 
 class DeleteTemplate(DeleteView):
+    """Delete Template"""
     model = SurveyTemplates
     success_url = '/templates'
 

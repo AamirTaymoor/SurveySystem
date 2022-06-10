@@ -20,7 +20,7 @@ class CreateTemplateForm(forms.ModelForm):
             'placeholder': 'Subject'}),
             
             'body': forms.Textarea(attrs={
-            'rows': 5,
+            'rows': 10,
             'class': 'form-control',
             'id':'exampleTextarea',
             'placeholder': 'Template Body'}),
@@ -28,5 +28,7 @@ class CreateTemplateForm(forms.ModelForm):
             'is_active':forms.CheckboxInput(attrs={
                 'type':'checkbox',
                 'name':'Checkboxes1',
+                
+                
             })
          }

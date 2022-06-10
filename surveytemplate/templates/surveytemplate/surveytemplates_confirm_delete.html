@@ -1,19 +1,29 @@
 {% extends "surveytemplate/base.html" %}
 
 {% block content %}      
-
-<form method="POST">
+<div class= "container">
+<form method="POST" class = "bg-white">
     {% csrf_token %}
-     
+    <div class="card-body">	
  
  
-    <p>Are you sure you want to delete "{{ object }}"?</p>
+    <p>Are you sure you want to delete the Template "{{ object }}"?</p>
      
      
      
-        <input type="submit" value="Confirm">
-    </form
+        {% comment %} <input type="submit" value="Confirm"> {% endcomment %}
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary mr-2">Confirm</button>
+            <a class="btn btn-primary" href="{% url 'templates' %}" role="button">Cancel</a>
+            {% comment %} <button type="button" class="btn btn-secondary" href="{% url 'templates' %}">Cancel</button> {% endcomment %}
+        </div
 
 
+    </div>    
+</form>
+
+   
+</div>
 
 {% endblock %}
