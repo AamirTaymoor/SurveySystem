@@ -38,6 +38,7 @@ var KTDropzoneDemo = function () {
 
         // file type validation
         $('#kt_dropzone_3').dropzone({
+<<<<<<< HEAD
             url: "https://keenthemes.com/scripts/void.php", // Set the url for your upload script location
             paramName: "file", // The name that will be used to transfer the file
             maxFiles: 10,
@@ -46,6 +47,17 @@ var KTDropzoneDemo = function () {
             acceptedFiles: "image/*,application/pdf,.psd",
             accept: function(file, done) {
                 if (file.name == "justinbieber.jpg") {
+=======
+            url: "/upload/", // Set the url for your upload script location
+            paramName: "my_files", // The name that will be used to transfer the file
+            maxFiles: 10,
+            maxFilesize: 10, // MB
+            addRemoveLinks: true,
+            acceptedFiles: ".xls,.xlsx,",
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            accept: function(file, done) {
+                if (file.name == "recepiients.xls") {
+>>>>>>> dev
                     done("Naha, you don't.");
                 } else {
                     done();

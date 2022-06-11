@@ -11,7 +11,7 @@ var KTDatatablesAdvancedMultipleControls = function() {
 				"<'row py-3'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
 				"<'row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'p>>" +
 				"<'row py-3'<'col-sm-12'tr>>" +
-				"<'row py-3'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+				// "<'row py-3'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
 				"<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>", // read more: https://datatables.net/examples/basic_init/dom.html
 
 			columnDefs: [
