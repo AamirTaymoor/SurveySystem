@@ -1,0 +1,60 @@
+{% extends "surveytemplate/base.html" %}
+{% load static %}
+{% block styles %} 
+ 
+<!--begin::Page Vendors Styles(used by this page)-->
+<link href="{% static 'surveytemplate/assets/plugins/custom/datatables/datatables.bundle.css'%}" rel="stylesheet" type="text/css"/>
+<!--end::Page Vendors Styles-->
+{% endblock %}
+
+
+{% block content %}  
+<div class="container">
+<!--begin::Card-->
+<div class="card card-custom">
+	<div class="card-header flex-wrap py-5">
+		<div class="card-title">
+			<h3 class="card-label">
+				Templates
+				<span class="text-muted pt-2 font-size-sm d-block">Select the Template</span>
+			</h3>
+		</div>
+		
+	</div>
+	<div class="card-body">
+		<!--begin::Form-->
+	<form method="POST" >
+        {% csrf_token %}
+		<div class="card-body">
+			<div class="form-group">
+				<label for="exampleSelect1">Select Template <span class="text-danger">*</span></label>
+				<select class="form-control" id="exampleSelect1" name="template">
+                    {% for record in object_list%}
+					<option>{{record}}</option>
+					{% endfor %}
+				</select>
+			</div>
+		
+		</div>
+		<div class="card-footer">
+			<button type="submit" class="btn btn-primary mr-2" >Next</button>
+			<button type="reset" class="btn btn-secondary">Cancel</button>
+		</div>
+	</form>
+	<!--end::Form-->
+	
+</div>
+<!--end::Card-->  
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!--begin::Page Vendors(used by this page)-->
+<script src="{% static 'surveytemplate/assets/plugins/custom/datatables/datatables.bundle.js'%}"></script>
+<!--end::Page Vendors-->
+
+<!--begin::Page Scripts(used by this page)-->
+    <script src="{% static 'surveytemplate/assets/js/pages/crud/datatables/advanced/multiple-controls.js'%}"></script>
+<!--end::Page Scripts-->
+
+{% endblock %}

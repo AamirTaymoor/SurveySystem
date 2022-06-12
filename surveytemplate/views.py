@@ -1,4 +1,5 @@
 
+from re import template
 from django.shortcuts import render
 from .models import SurveyTemplates
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView, DeleteView
@@ -24,7 +25,7 @@ class HomeView(TemplateView):
 
 
 class TemplateListView(ListView):
-    """"List all Templates"""
+    """List all Templates"""
     model = SurveyTemplates
     template_name = "surveytemplate/listtemplate.html"
     
@@ -170,8 +171,36 @@ class SearchRecepients(ListView):
         return queryset
 
     
-class EmailTemplate(ListView):
-    pass
+class SelectTemplate(ListView):
+   
+    model = SurveyTemplates
+    template_name = 'surveytemplate/selecttemplate.html'
 
+    def post(self, request, *args, **kwargs):
+        template = request.POST["template"]
+        return redirect('selectgroups',template ) 
+   
+
+
+class SelectGroups(View):
+    def get(self,request,*args, **kwargs):
+        template_name = kwargs['template']
+        return render(request,'surveytemplate/selectgroups.html',{'object_list':GroupName.objects.all()})
+    
+    def post(self,request,*args, **kwargs):
+        #['Banks']
+        list_of_input_groups=request.POST.getlist('group')
+        template = kwargs['template']
+        recipients = {}
+        for group_id in list_of_input_groups:
+            data = Recepient.objects.filter(group=group_id)
+            for record in data:
+                recipients[record.first_name]=record.email
+
+        final_recipients = {}
+        for key,value in recipients.items():
+            if value not in final_recipients.values():
+               final_recipients[key] = value
         
+        return HttpResponse("Helloclear")
 

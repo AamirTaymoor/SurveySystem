@@ -1,9 +1,10 @@
+import email
 from email.headerregistry import Group
 from django.db import models
 
 # Create your models here.
 class SurveyTemplates(models.Model):
-    template_name = models.CharField(max_length=40,null=False)
+    template_name = models.CharField(max_length=40,null=False,unique=True)
     subject = models.CharField(max_length=50,null=False)
     body = models.TextField()
     is_active = models.BooleanField(default=True)
@@ -34,6 +35,8 @@ class Recepient(models.Model):
 
     def get_group(self):
         return self.group.all()
+
+
 
 
     

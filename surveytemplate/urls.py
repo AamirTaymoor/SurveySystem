@@ -9,6 +9,8 @@ urlpatterns = [
     path('create/',views.CreateTemplate.as_view(),name = 'create'),
     path('edit/<str:pk>/',views.EditTemplate.as_view(), name='edit'),
     path('delete/<str:pk>/', views.DeleteTemplate.as_view(),name = 'delete'),
+    path('selecttemplate/',views.SelectTemplate.as_view(), name='selecttemplate'),
+    path('selectgroups/<str:template>',views.SelectGroups.as_view(), name='selectgroups'),
 
     path('recepients/',views.RecepientView.as_view(), name='recepients'),
     path('groups/<int:pk>',views.GroupView.as_view(), name='group-view'),
