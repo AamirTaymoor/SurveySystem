@@ -16,6 +16,7 @@ import csv
 from django.http import HttpResponse
 from django.db.models import Q
 from django.core.paginator import Paginator
+from .tasks import EmailTask
 
 # Create your views here.
 
@@ -202,5 +203,8 @@ class SelectGroups(View):
             if value not in final_recipients.values():
                final_recipients[key] = value
         
+        EmailTask.delay(final_recipients,template)
+        
         return HttpResponse("Helloclear")
 
+# celery -A SurveySystem worker -l info
