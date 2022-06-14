@@ -207,4 +207,3 @@ class SelectGroups(View):
         
         return HttpResponse("Helloclear")
 
-# celery -A SurveySystem worker -l info
