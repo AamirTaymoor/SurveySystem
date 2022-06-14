@@ -17,6 +17,8 @@ from django.http import HttpResponse
 from django.db.models import Q
 from django.core.paginator import Paginator
 from .tasks import EmailTask
+from datetime import datetime, timedelta
+
 
 # Create your views here.
 
@@ -191,6 +193,9 @@ class SelectGroups(View):
     def post(self,request,*args, **kwargs):
         #['Banks']
         list_of_input_groups=request.POST.getlist('group')
+        hours = int(request.POST.get('hours'))
+        days = int(request.POST.get('days'))
+
         template = kwargs['template']
         recipients = {}
         for group_id in list_of_input_groups:
@@ -203,7 +208,9 @@ class SelectGroups(View):
             if value not in final_recipients.values():
                final_recipients[key] = value
         
-        EmailTask.delay(final_recipients,template)
+        
+        tomorrow = datetime.utcnow() + timedelta(days= days,hours = hours ,minutes=0,seconds =0)
+        EmailTask.apply_async((final_recipients,template),eta = tomorrow)
         
         return HttpResponse("Helloclear")
 

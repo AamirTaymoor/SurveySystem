@@ -11,6 +11,7 @@ logger = get_task_logger(__name__)
 
 @task(name='EmailTask')
 def EmailTask(final_recipients,template):
+    #final_recipients,template = data
     temp = SurveyTemplates.objects.get(template_name = template)
     subject = temp.subject
     body = temp.body
