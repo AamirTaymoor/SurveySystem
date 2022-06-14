@@ -16,11 +16,13 @@ def EmailTask(final_recipients,template):
     body = temp.body
     email_from = settings.EMAIL_HOST_USER
 
-    for name,emailid in final_recipients.items():
-        message = body.replace("{name}",name)
-        to = [emailid]
-        send_mail(subject,message,email_from, to )
+    for key,value in final_recipients.items():
+        message = body.replace("{name}",key)
+        to = [value]
+        d = send_mail(subject,message,email_from, to )
         
+    
+
     return('Junaid')
 
 

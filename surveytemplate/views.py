@@ -1,7 +1,7 @@
 
 from re import template
 from django.shortcuts import render
-from .models import SurveyTemplates
+# from .models import SurveyTemplates
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView, DeleteView
 from .forms import CreateTemplateForm, UserLoginForm, RegisterForm
 from django.contrib import messages
@@ -20,9 +20,14 @@ from surveytemplate.tasks import EmailTask
 from django.contrib.auth import login, authenticate, logout
 # Create your views here.
 
-class HomeView(TemplateView):
+class HomeView(View):
     """Home Page"""
-    template_name = "surveytemplate/index.html"
+    # template_name = "surveytemplate/index.html"
+    def get(self, request):
+        if request.user.is_authenticated:
+            return render(request, 'surveytemplate/index.html')
+        else:
+            return redirect('login')
 
 
 class TemplateListView(ListView):
@@ -224,7 +229,7 @@ class RegisterView(View):
             user = form.save()
             login(request, user)
             messages.success(request, "Registration successful.")
-            return redirect("login")
+            return redirect("home")
         messages.warning(
             request, "Unsuccessful registration. Invalid data or Username already exists.")
         form = RegisterForm()
