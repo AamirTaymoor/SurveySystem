@@ -3,7 +3,7 @@ from re import template
 from django.shortcuts import render
 from .models import SurveyTemplates
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView, DeleteView
-from .forms import CreateTemplateForm
+from .forms import CreateTemplateForm, UserLoginForm, RegisterForm
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views import View
@@ -16,8 +16,8 @@ import csv
 from django.http import HttpResponse
 from django.db.models import Q
 from django.core.paginator import Paginator
-from .tasks import EmailTask
-
+from surveytemplate.tasks import EmailTask
+from django.contrib.auth import login, authenticate, logout
 # Create your views here.
 
 class HomeView(TemplateView):
@@ -203,8 +203,59 @@ class SelectGroups(View):
             if value not in final_recipients.values():
                final_recipients[key] = value
         
-        EmailTask.delay(final_recipients,template)
+        res = EmailTask.delay(final_recipients,template)
+        print(f"id={res.id}, state={res.state}, status={res.status}")
         
         return HttpResponse("Helloclear")
 
 # celery -A SurveySystem worker -l info
+
+class RegisterView(View):
+    def get(self, request):
+        form = RegisterForm()
+        # pass
+        return render(request, "surveytemplate/register.html", context={"register_form": form})
+
+    def post(self, request):
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            uname = form.cleaned_data.get('username')
+            print(uname,)
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Registration successful.")
+            return redirect("login")
+        messages.warning(
+            request, "Unsuccessful registration. Invalid data or Username already exists.")
+        form = RegisterForm()
+        return render(request, "surveytemplate/register.html", context={"register_form": form})
+
+class LoginRequestView(View):
+    def get(self, request):
+        form = UserLoginForm()
+        return render(request, template_name="surveytemplate/login.html", context={"login_form": form})
+
+    def post(self, request):
+        form = UserLoginForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.info(request, f"You are now logged in as {username}.")
+                return redirect("home")
+            else:
+                messages.warning(request, "Invalid username or password!!!")
+                form = UserLoginForm()
+                return render (request, 'surveytemplate/login.html', context={"login_form":form})
+        else:
+            messages.warning(request, "Invalid username or password!!!")
+            form = UserLoginForm()
+            return render (request, 'surveytemplate/login.html', context={"login_form":form})
+
+class LogoutRequestView(View):
+    def get(self, request):
+        logout(request)
+        messages.info(request, "You have successfully logged out.")
+        return redirect("login")

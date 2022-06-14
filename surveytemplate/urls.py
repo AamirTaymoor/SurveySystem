@@ -17,4 +17,7 @@ urlpatterns = [
     path('upload/',views.UploadFiles.as_view(), name='upload'),
     path('download/',views.DownloadRecepients.as_view(), name='download'),
     path('search/',views.SearchRecepients.as_view(), name='search'),
+    path('login/',views.LoginRequestView.as_view(), name='login'),
+    path('register/',views.RegisterView.as_view(), name='register'),
+    path('logout/',views.LogoutRequestView.as_view(), name='logout'),
 ]
