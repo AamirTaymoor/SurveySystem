@@ -1,13 +1,15 @@
 
 from re import template
 from django.shortcuts import render
-from .models import SurveyTemplates
+# from .models import SurveyTemplates
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView, DeleteView
-from .forms import CreateTemplateForm
+from .forms import CreateTemplateForm, UserLoginForm, RegisterForm
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views import View
-from requests import request
+from django_celery_results.models import TaskResult
+
+
 from .models import Recepient, SurveyTemplates, GroupName
 from django.views.generic import ListView, TemplateView
 from django.utils.datastructures import MultiValueDictKeyError
@@ -20,11 +22,18 @@ from .tasks import EmailTask
 from datetime import datetime, timedelta
 
 
+from surveytemplate.tasks import EmailTask
+from django.contrib.auth import login, authenticate, logout
 # Create your views here.
 
-class HomeView(TemplateView):
+class HomeView(View):
     """Home Page"""
-    template_name = "surveytemplate/index.html"
+    # template_name = "surveytemplate/index.html"
+    def get(self, request):
+        if request.user.is_authenticated:
+            return render(request, 'surveytemplate/index.html')
+        else:
+            return redirect('login')
 
 
 class TemplateListView(ListView):
@@ -209,8 +218,65 @@ class SelectGroups(View):
                final_recipients[key] = value
         
         
-        tomorrow = datetime.utcnow() + timedelta(days= days,hours = hours ,minutes=0,seconds =0)
-        EmailTask.apply_async((final_recipients,template),eta = tomorrow)
+        tomorrow = datetime.utcnow() + timedelta(days = days,hours = hours ,minutes = 0,seconds = 0)
+        x = EmailTask.apply_async((final_recipients,template),eta = tomorrow)
+        print("-----------------------------------------------")
+        print(x.status)
+        print("-----------------------------------------------")
         
-        return HttpResponse("Helloclear")
+        return redirect('home')
+# celery -A SurveySystem worker -l info
 
+class RegisterView(View):
+    def get(self, request):
+        form = RegisterForm()
+        # pass
+        return render(request, "surveytemplate/register.html", context={"register_form": form})
+
+    def post(self, request):
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            uname = form.cleaned_data.get('username')
+            print(uname,)
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Registration successful.")
+            return redirect("home")
+        messages.warning(
+            request, "Unsuccessful registration. Invalid data or Username already exists.")
+        form = RegisterForm()
+        return render(request, "surveytemplate/register.html", context={"register_form": form})
+
+class LoginRequestView(View):
+    def get(self, request):
+        form = UserLoginForm()
+        return render(request, template_name="surveytemplate/login.html", context={"login_form": form})
+
+    def post(self, request):
+        form = UserLoginForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.info(request, f"You are now logged in as {username}.")
+                return redirect("home")
+            else:
+                messages.warning(request, "Invalid username or password!!!")
+                form = UserLoginForm()
+                return render (request, 'surveytemplate/login.html', context={"login_form":form})
+        else:
+            messages.warning(request, "Invalid username or password!!!")
+            form = UserLoginForm()
+            return render (request, 'surveytemplate/login.html', context={"login_form":form})
+
+class LogoutRequestView(View):
+    def get(self, request):
+        logout(request)
+        messages.info(request, "You have successfully logged out.")
+        return redirect("login")
+
+class TaskStatus(ListView):
+    model = TaskResult
+    template_name = 'surveytemplate/status.html'

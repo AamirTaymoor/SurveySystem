@@ -1,0 +1,70 @@
+{% extends "surveytemplate/base.html" %}
+{% load static %}
+{% block styles %} 
+ 
+<!--begin::Page Vendors Styles(used by this page)-->
+<link href="{% static 'surveytemplate/assets/plugins/custom/datatables/datatables.bundle.css'%}" rel="stylesheet" type="text/css"/>
+<!--end::Page Vendors Styles-->
+{% endblock %}
+
+
+{% block content %}  
+<div class="container">
+<!--begin::Card-->
+<div class="card card-custom">
+	<div class="card-header flex-wrap py-5">
+		<div class="card-title">
+			<h3 class="card-label">
+				Tasks
+				<span class="text-muted pt-2 font-size-sm d-block">List of all Tasks.</span>
+			</h3>
+		</div>
+		<div class="card-toolbar">
+	
+<!--end::Dropdown-->
+
+
+		</div>
+	</div>
+	<div class="card-body">
+		<!--begin: Datatable-->
+		<table class="table table-separate table-head-custom table-checkable" id="kt_datatable">
+			                    <thead>
+                              <tr>
+                                             
+                                              <th>Task Name</th>
+                                              <th>Completion Date Time</th>
+                                              <th>Status</th>
+                                  </tr>
+                    </thead>
+
+                        <tbody>
+							{% for record in object_list %}
+                            <tr>
+                                              <td>{{record.task_name}}</td>  
+                                              <td>{{record.date_done}}</td>
+                                              <td>{{record.status}}</td>
+                                              
+                                             
+                                 </tr> 
+								 {% endfor %}
+                        </tbody>
+
+        		</table>
+		<!--end: Datatable-->
+	</div>
+</div>
+<!--end::Card-->  
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!--begin::Page Vendors(used by this page)-->
+<script src="{% static 'surveytemplate/assets/plugins/custom/datatables/datatables.bundle.js'%}"></script>
+<!--end::Page Vendors-->
+
+<!--begin::Page Scripts(used by this page)-->
+    <script src="{% static 'surveytemplate/assets/js/pages/crud/datatables/advanced/multiple-controls.js'%}"></script>
+<!--end::Page Scripts-->
+
+{% endblock %}

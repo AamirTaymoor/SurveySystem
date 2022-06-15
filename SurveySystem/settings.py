@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+from pickle import TRUE
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -44,7 +45,7 @@ INSTALLED_APPS = [
     'surveytemplate',
     'bandit',
     'django_celery_results',
-    'django_celery_beat',
+    # 'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -143,16 +144,26 @@ EMAIL_HOST_PASSWORD = os.getenv("password")
 EMAIL_PORT = '587'
 EMAIL_USE_TLS = True
 
+
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'default'
+#CELERY_RESULT_BACKEND = 'db+sqlite:///django-db'
 BROKER_URL = 'redis://localhost:6379'
 #CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Kolkata'
+CELERY_TASK_TRACK_STARTED = True
+#CELERY_IGNORE_RESULT = False
+CELERY_RESULT_EXTENDED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_SEND_EVENTS = True
 
-CELERY_RESULT_BACKEND = 'django-db'
+
+
 
 
 #Celery Beat Setting
 
-CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+# CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'

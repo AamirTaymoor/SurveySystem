@@ -8,12 +8,14 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE','SurveySystem.settings')
 app = Celery('SurveySystem')
 app.config_from_object('django.conf:settings')
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
-
+#app.autodiscover_tasks()
 # # Celery Beat Setting
 # app.conf.beat_schedule ={
 
 
 # }
+
+
 
 @app.task(bind=True)
 def debug_task(self):
