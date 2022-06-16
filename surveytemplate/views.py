@@ -3,13 +3,11 @@ from re import template
 from django.shortcuts import render
 # from .models import SurveyTemplates
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView, DeleteView
-from .forms import CreateTemplateForm, UserLoginForm, RegisterForm
+from .forms import CreateTemplateForm, UserLoginForm, RegisterForm, CreateGroupForm, CreateRecepientForm
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views import View
 from django_celery_results.models import TaskResult
-
-
 from .models import Recepient, SurveyTemplates, GroupName
 from django.views.generic import ListView, TemplateView
 from django.utils.datastructures import MultiValueDictKeyError
@@ -20,10 +18,9 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from .tasks import EmailTask
 from datetime import datetime, timedelta
-
-
 from surveytemplate.tasks import EmailTask
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.models import User
 # Create your views here.
 
 class HomeView(View):
@@ -40,6 +37,8 @@ class TemplateListView(ListView):
     """List all Templates"""
     model = SurveyTemplates
     template_name = "surveytemplate/listtemplate.html"
+    def get_queryset(self):
+        return SurveyTemplates.objects.filter(user = User.objects.get(username = self.request.user.username))
     
 
 class CreateTemplate(CreateView):
@@ -47,6 +46,11 @@ class CreateTemplate(CreateView):
     model = SurveyTemplates
     form_class = CreateTemplateForm
     success_url = '/templates'
+    def form_valid(self, form):
+        user = User.objects.get(username= self.request.user.username)
+        form.instance.user = user
+        return super(CreateTemplate, self).form_valid(form)
+
 
 class EditTemplate(UpdateView):
     """Edit Template"""
@@ -64,18 +68,26 @@ class GroupsView(ListView):
     template_name = "surveytemplate/groups.html"
     model = GroupName
     paginate_by = 5
+    def get_queryset(self):
+        return GroupName.objects.filter(user = User.objects.get(username = self.request.user.username))
+
 
 class RecepientView(ListView):
     model= Recepient
     template_name = 'surveytemplate/participants.html'
     paginate_by = 5
+    def get_queryset(self):
+        print(User.objects.get(username=self.request.user.username))
+        return Recepient.objects.filter(user = User.objects.get(username = self.request.user.username))
+
+
 
 class GroupView(ListView):
     template_name = "surveytemplate/groupview.html"
     paginate_by = 5
 
     def get_queryset(self):
-        return Recepient.objects.filter(group = self.kwargs['pk'])
+        return Recepient.objects.filter(group = self.kwargs['pk']).filter(user= User.objects.get(username=self.request.user.username))
          
 
 class UploadFiles(View):
@@ -91,9 +103,10 @@ class UploadFiles(View):
             xx = []
             for i in data.index:
                 xx.append(data['FirstName'][i])
-                obj2, create = GroupName.objects.get_or_create(group_name = data['Group'][i])
+                obj2, create = GroupName.objects.get_or_create(group_name = data['Group'][i], user = User.objects.get(username=self.request.user.username))
                 obj, created = Recepient.objects.get_or_create(email = data['Email'][i])
                 if created == True:
+                    obj.user = User.objects.get(username=self.request.user.username)
                     obj.first_name = data['FirstName'][i]
                     obj.last_name = data['LastName'][i]
                     obj.email = data['Email'][i]
@@ -101,6 +114,8 @@ class UploadFiles(View):
                     obj.is_active = data['Is_active'][i]
                     #obj2, create = GroupName.objects.get(group_name = row[6])
                     if create == True:
+                        obj2.user = User.objects.get(username=self.request.user.username)
+                        print(obj2.user)
                         obj2.group_name = data['Group'][i]
                         obj2.save()
                         obj.group.add(obj2)
@@ -176,7 +191,6 @@ class SearchRecepients(ListView):
     paginate_by = 5
     #context_object_name = 'page_obj'
    
-
     def get_queryset(self):
         queryset = Recepient.objects.all()
         queryset = queryset.filter(Q(first_name__icontains=self.request.GET['searched']) | Q(last_name__icontains=self.request.GET['searched'] ) | Q(address__icontains=self.request.GET['searched'] ) | Q(email__icontains=self.request.GET['searched']))
@@ -280,3 +294,45 @@ class LogoutRequestView(View):
 class TaskStatus(ListView):
     model = TaskResult
     template_name = 'surveytemplate/status.html'
+
+class CreateGroup(CreateView):
+    """Create Group"""
+    model = GroupName
+    form_class = CreateGroupForm
+    success_url = '/groups'
+    def form_valid(self, form):
+        user = User.objects.get(username= self.request.user.username)
+        form.instance.user = user
+        return super(CreateGroup, self).form_valid(form)
+
+class EditGroup(UpdateView):
+    """Edit Group"""
+    model = GroupName
+    form_class = CreateGroupForm
+    success_url = '/groups'
+
+class DeleteGroup(DeleteView):
+    """Delete Group"""
+    model = GroupName
+    success_url = '/groups' 
+
+class DeleteRecepient(DeleteView):
+    """Delete Recepient"""
+    model = Recepient
+    success_url = '/recepients' 
+
+class CreateRecepient(CreateView):
+    """Create Recepient"""
+    model = Recepient
+    form_class = CreateRecepientForm
+    success_url = '/recepients'
+    def form_valid(self, form):
+        user = User.objects.get(username= self.request.user.username)
+        form.instance.user = user
+        return super(CreateRecepient, self).form_valid(form)
+
+class EditRecepient(UpdateView):
+    """Edit Recepient"""
+    model = Recepient
+    form_class = CreateRecepientForm
+    success_url = '/recepients'

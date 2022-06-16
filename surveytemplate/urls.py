@@ -21,4 +21,10 @@ urlpatterns = [
     path('login/',views.LoginRequestView.as_view(), name='login'),
     path('register/',views.RegisterView.as_view(), name='register'),
     path('logout/',views.LogoutRequestView.as_view(), name='logout'),
+    path('creategroup/',views.CreateGroup.as_view(),name = 'create-group'),
+    path('editgroup/<int:pk>/',views.EditGroup.as_view(), name='edit-group'),
+    path('deletegroup/<int:pk>/',views.DeleteGroup.as_view(), name='delete-group'),
+    path('deleterecepient/<int:pk>/',views.DeleteRecepient.as_view(), name='delete-recepient'),
+    path('createrecepient/',views.CreateRecepient.as_view(),name = 'create-recepient'),
+    path('editrecepient/<int:pk>',views.EditRecepient.as_view(),name = 'edit-recepient'),
 ]

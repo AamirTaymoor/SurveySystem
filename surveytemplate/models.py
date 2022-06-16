@@ -1,9 +1,11 @@
 import email
 from email.headerregistry import Group
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class SurveyTemplates(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     template_name = models.CharField(max_length=40,null=False,unique=True)
     subject = models.CharField(max_length=50,null=False)
     body = models.TextField()
@@ -15,6 +17,7 @@ class SurveyTemplates(models.Model):
         return self.template_name
 
 class GroupName(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,  null=True, blank=True)
     group_name = models.CharField(max_length=50)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
@@ -23,6 +26,7 @@ class GroupName(models.Model):
         return self.group_name
 
 class Recepient(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,  null=True, blank=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=254)

@@ -1,4 +1,4 @@
-from .models import SurveyTemplates
+from .models import GroupName, SurveyTemplates, Recepient
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
@@ -93,3 +93,91 @@ class RegisterForm(UserCreationForm):
     #     if commit:
     #         user.save()
     #     return user
+
+#create group form
+class CreateGroupForm(forms.ModelForm):
+    class Meta:
+        model = GroupName
+        fields = ['group_name']
+
+        widgets = {
+            'group_name': forms.TextInput(attrs={
+            'class': 'form-control',
+            'id':"example-text-input",
+            'type' : 'text',
+            'placeholder': 'Group Name',
+            }),
+            # 'subject': forms.TextInput(attrs={
+            # 'class': 'form-control',
+            # 'id':"example-text-input",
+            # 'type' : 'text',
+            # 'placeholder': 'Subject'}),
+            
+            # 'body': forms.Textarea(attrs={
+            # 'rows': 10,
+            # 'class': 'form-control',
+            # 'id':'exampleTextarea',
+            # 'placeholder': 'Template Body'}),
+
+            # 'is_active':forms.CheckboxInput(attrs={
+            #     'type':'checkbox',
+            #     'name':'Checkboxes1',
+                
+                
+            # })
+         }
+
+class CreateRecepientForm(forms.ModelForm):
+    class Meta:
+        model = Recepient
+        fields = ['first_name', 'last_name', 'email', 'address', 'is_active', 'group']
+        
+        groups = GroupName.objects.all()
+        # group = forms.ModelMultipleChoiceField(queryset=GroupName.objects, widget=forms.CheckboxSelectMultiple(attrs={
+        #     'type':'checkbox',
+        #     'class': 'form-check-input',
+        #     'name': 'groups',
+        #      'id' : 'flexCheckDefault',
+        #     }),
+        #      required=False)
+
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+            'class': 'form-control',
+            'id':"example-text-input",
+            'type' : 'text',
+            'placeholder': 'First Name',
+            }),
+
+            'last_name': forms.TextInput(attrs={
+            'class': 'form-control',
+            'id':"example-text-input",
+            'type' : 'text',
+            'placeholder': 'Last Name',
+            }),
+            'email': forms.EmailInput(attrs={
+            'class': 'form-control',
+            'id':"example-text-input",
+            'type' : 'text',
+            'placeholder': 'Email',
+            }),
+            'address': forms.TextInput(attrs={
+            'class': 'form-control',
+            'id':"example-text-input",
+            'type' : 'text',
+            'placeholder': 'Address',
+            }),
+
+            'is_active':forms.CheckboxInput(attrs={
+                'type':'checkbox',
+                'name':'Checkboxes1',      
+            }),
+            'group': forms.CheckboxSelectMultiple(attrs={
+                'type': 'checkbox',
+                'class': 'select multiple',
+                'name': 'groups',
+                'id' : 'flexCheckDefault',
+                'queryset':groups
+                
+            })
+         }
