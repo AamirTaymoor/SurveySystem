@@ -199,13 +199,15 @@ class SearchRecepients(ListView):
     
 class SelectTemplate(ListView):
    
-    model = SurveyTemplates
+    # model = SurveyTemplates
     template_name = 'surveytemplate/selecttemplate.html'
 
     def post(self, request, *args, **kwargs):
         template = request.POST["template"]
         return redirect('selectgroups',template ) 
-   
+    def get_queryset(self):
+        queryset = SurveyTemplates.objects.filter(user= self.request.user)
+        return queryset
 
 
 class SelectGroups(View):
