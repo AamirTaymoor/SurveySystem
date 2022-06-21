@@ -97,13 +97,11 @@
                                           <td>{{ recp.email }}</td>
                                           <td>{{ recp.address }}</td>
                                           <td>{{ recp.is_active }}</td>
-                                            
-                                          <!-- <td>{% for g in recp.get_group %}
-                                              {{ g }}
-                                              {% endfor %}
-                                            </td> -->
-                                          
-                                          <td><i></i></td>
+                                          <td>
+                                            <a href="{% url 'edit-recepient' pk=recp.id%}"><i class="fas fa-edit text-success mr-5"></i></a> &nbsp       
+                                            <a href ="{% url 'delete-recepient' pk=recp.id%}"><i class="fad fa-trash text-danger mr-5"></i>
+                                            </a>
+                                         </td>
                                           <!-- <td nowrap></td> -->
                             </tr>
                         {% endfor %}

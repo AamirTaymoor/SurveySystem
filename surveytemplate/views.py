@@ -14,7 +14,7 @@ from django.views.generic import ListView, TemplateView
 from django.utils.datastructures import MultiValueDictKeyError
 import pandas as pd
 import csv
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.db.models import Q
 from django.core.paginator import Paginator
 from .tasks import EmailTask
@@ -22,6 +22,7 @@ from datetime import datetime, timedelta
 from surveytemplate.tasks import EmailTask
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
+from django.urls import reverse
 # Create your views here.
 
 class HomeView(View):
@@ -103,6 +104,7 @@ class UploadFiles(View):
         return render(request, 'surveytemplate/upload.html', {'g_id':g_id})
     def post(self, request, *args, **kwargs):
         my_f = request.FILES.getlist('my_files')
+        g_id = self.kwargs['pk']
         print(my_f)
         for f in my_f:
             data = pd.read_excel(f)
@@ -149,7 +151,8 @@ class UploadFiles(View):
                     messages.warning(request, f"recepient {data['FirstName'][i]} already exists")
                     #return render(request, 'surveytemplate/upload.html')
         print(len(xx))
-        return redirect('recepients')
+        return HttpResponseRedirect(reverse('group-view', kwargs={'pk': g_id}))
+        #return redirect('recepients')
 
 class DownloadRecepients(View):
     def get(self, request, *args, **kwargs):
@@ -371,7 +374,8 @@ class CreateRecepient(View):
             obj.group.add(g)
             obj.save()
             print("hhhhhhhhhhhhhh")
-            return redirect('groups')
+            #return redirect('groups')
+            return HttpResponseRedirect(reverse('group-view', kwargs={'pk': self.kwargs['pk']}))
 
     def get(self, request, *args, **kwargs):
         form = CreateRecepientForm()
