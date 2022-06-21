@@ -55,24 +55,7 @@
 					<span class="navi-text">Download Recepients</span>
 				</a>
 			</li>
-			<!-- <li class="navi-item">
-				<a href="#" class="navi-link">
-					<span class="navi-icon"><i class="la la-file-excel-o"></i></span>
-					<span class="navi-text">Excel</span>
-				</a>
-			</li>
-			<li class="navi-item">
-				<a href="#" class="navi-link">
-					<span class="navi-icon"><i class="la la-file-text-o"></i></span>
-					<span class="navi-text">CSV</span>
-				</a>
-			</li>
-			<li class="navi-item">
-				<a href="#" class="navi-link">
-					<span class="navi-icon"><i class="la la-file-pdf-o"></i></span>
-					<span class="navi-text">PDF</span>
-				</a>
-			</li> -->
+			
 		</ul>
 		<!--end::Navigation-->
 	</div>
@@ -95,7 +78,7 @@
 	</div>
 	<div class="card-body">
 		<!--begin: Datatable-->
-		<table class="table table-bordered table-checkable" id="kt_datatable">
+        <table class="table table-separate table-head-custom table-checkable" id="kt_datatable">
 			                    <thead>
                               <tr>
                                               <th>First Name</th>
@@ -103,7 +86,6 @@
                                               <th>Email</th>
                                               <th>Address</th>
                                               <th>Is Active</th>
-                                              <!-- <th>Group Label</th> -->
                                               <th>Action</th>
                                   </tr>
                     </thead>
@@ -128,77 +110,8 @@
                     </tbody>
                 </table>
                 <!--end: Datatable-->
-                <div class="row">
-                    <div class="col-sm-12 col-md-5">
-                        <div class="dataTables_info" id="kt_datatable_2_info" role="status" aria-live="polite">Showing {{page_obj.start_index}} to {{page_obj.end_index}} of {{page_obj.paginator.count}} entries
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-7 dataTables_pager">
-                        <!-- <div class="dataTables_length" id="kt_datatable_2_length">
-                            <label>Display <select name="kt_datatable_2_length" aria-controls="kt_datatable_2" class="custom-select custom-select-sm form-control form-control-sm">
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                            </select></label>
-                        </div> -->
-                        <div class="dataTables_paginate paging_simple_numbers" id="kt_datatable_2_paginate">
-                            <ul class="pagination">
-                                <li class="paginate_button page-item previous " id="kt_datatable_2_previous">
-                                    {% if page_obj.has_previous %}
-                                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}" aria-controls="kt_datatable_2" data-dt-idx="0" tabindex="0" class="page-link">
-                                        <i class="ki ki-arrow-back"></i>
-                                    </a>
-                                    {% else %}
-                                    <a href="" aria-controls="kt_datatable_2" data-dt-idx="0" tabindex="0" class="page-link disabled">
-                                        <i class="ki ki-arrow-back"></i>
-                                    </a>
-                                    {% endif %}
-                                
-                                </li>
-                                <!-- {{ request.get_full_path }}  -->
-                                {% for p in page_obj.paginator.page_range %}
-                                <li class="paginate_button page-item {% if page_obj.number == p %}active{% endif %}">
-                                    <a href="{{ request.path }}?page={{p}}"  aria-controls="kt_datatable_2" data-dt-idx="1" tabindex="0" class="page-link ">{{p}}</a>
-                                </li>
-                                {% endfor %}
-                                <li class="paginate_button page-item next" id="kt_datatable_2_next">
-                                    {% if page_obj.has_next %}
-                                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}" aria-controls="kt_datatable_2" data-dt-idx="8" tabindex="0" class="page-link">
-                                        <i class="ki ki-arrow-next"></i>
-                                    </a>
-                                    {% else %}
-                                    <a href="" aria-controls="kt_datatable_2" data-dt-idx="8" tabindex="0" class="page-link disabled">
-                                        <i class="ki ki-arrow-next"></i>
-                                    </a>
-                                    {% endif %}
-                                </li> 
-                                <!-- <li class="paginate_button page-item ">
-                                    <a href="#" aria-controls="kt_datatable_2" data-dt-idx="2" tabindex="0" class="page-link">2</a>
-                                </li>
-                                <li class="paginate_button page-item ">
-                                    <a href="#" aria-controls="kt_datatable_2" data-dt-idx="3" tabindex="0" class="page-link">3</a>
-                                </li>
-                                <li class="paginate_button page-item ">
-                                    <a href="#" aria-controls="kt_datatable_2" data-dt-idx="4" tabindex="0" class="page-link">4</a>
-                                </li>
-                                <li class="paginate_button page-item ">
-                                    <a href="#" aria-controls="kt_datatable_2" data-dt-idx="5" tabindex="0" class="page-link">5</a>
-                                </li>
-                                <li class="paginate_button page-item disabled" id="kt_datatable_2_ellipsis">
-                                    <a href="#" aria-controls="kt_datatable_2" data-dt-idx="6" tabindex="0" class="page-link">…</a>
-                                </li>
-                                <li class="paginate_button page-item ">
-                                    <a href="#" aria-controls="kt_datatable_2" data-dt-idx="7" tabindex="0" class="page-link">10</a>
-                                </li>
-                                <li class="paginate_button page-item next" id="kt_datatable_2_next">
-                                    <a href="#" aria-controls="kt_datatable_2" data-dt-idx="8" tabindex="0" class="page-link">
-                                        <i class="ki ki-arrow-next"></i>
-                                    </a>
-                                </li> -->
-                            </ul>
-                        </div>
-                    </div>
+               
+                  
                 </div>
             </div>
         </div>
@@ -211,82 +124,17 @@
 
 {% endblock %}
 
-{% block script %}
-<script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
-<!--begin::Global Config(global config for global JS scripts)-->
-<script>
-    var KTAppSettings = {
-"breakpoints": {
-"sm": 576,
-"md": 768,
-"lg": 992,
-"xl": 1200,
-"xxl": 1400
-},
-"colors": {
-"theme": {
-    "base": {
-        "white": "#ffffff",
-        "primary": "#3699FF",
-        "secondary": "#E5EAEE",
-        "success": "#1BC5BD",
-        "info": "#8950FC",
-        "warning": "#FFA800",
-        "danger": "#F64E60",
-        "light": "#E4E6EF",
-        "dark": "#181C32"
-    },
-    "light": {
-        "white": "#ffffff",
-        "primary": "#E1F0FF",
-        "secondary": "#EBEDF3",
-        "success": "#C9F7F5",
-        "info": "#EEE5FF",
-        "warning": "#FFF4DE",
-        "danger": "#FFE2E5",
-        "light": "#F3F6F9",
-        "dark": "#D6D6E0"
-    },
-    "inverse": {
-        "white": "#ffffff",
-        "primary": "#ffffff",
-        "secondary": "#3F4254",
-        "success": "#ffffff",
-        "info": "#ffffff",
-        "warning": "#ffffff",
-        "danger": "#ffffff",
-        "light": "#464E5F",
-        "dark": "#ffffff"
-    }
-},
-"gray": {
-    "gray-100": "#F3F6F9",
-    "gray-200": "#EBEDF3",
-    "gray-300": "#E4E6EF",
-    "gray-400": "#D1D3E0",
-    "gray-500": "#B5B5C3",
-    "gray-600": "#7E8299",
-    "gray-700": "#5E6278",
-    "gray-800": "#3F4254",
-    "gray-900": "#181C32"
-}
-},
-"font-family": "Poppins"
-};
-</script>
-<!--end::Global Config-->
+{% block scripts %}
 
-<!--begin::Global Theme Bundle(used by all pages)-->
-           <script src="{% static 'assets/plugins/global/plugins.bundle.js' %}"></script>
-           <script src="{% static 'assets/plugins/custom/prismjs/prismjs.bundle.js' %}"></script>
-           <script src="{% static 'assets/js/scripts.bundle.js"></script>
-        <!--end::Global Theme Bundle-->
 
-            <!--begin::Page Vendors(used by this page)-->
-                    <script src="{% static 'assets/plugins/custom/datatables/datatables.bundle.js' %}"></script>
-                <!--end::Page Vendors-->
+<!--begin::Page Vendors(used by this page)-->
+<script src="{% static 'surveytemplate/assets/plugins/custom/datatables/datatables.bundle.js'%}"></script>
+<!--end::Page Vendors-->
 
-            <!--begin::Page Scripts(used by this page)-->
-                    <script src="{% static 'assets/js/pages/crud/datatables/basic/basic.js' %}"></script>
-                <!--end::Page Scripts-->
+<!--begin::Page Scripts(used by this page)-->
+    <script src="{% static 'surveytemplate/assets/js/pages/crud/datatables/advanced/multiple-controls.js'%}"></script>
+<!--end::Page Scripts-->
+
+
+            
 {% endblock %}
