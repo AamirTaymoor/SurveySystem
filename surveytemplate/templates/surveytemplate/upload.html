@@ -29,7 +29,7 @@
     </div>
 </form>
 </div> -->
-<form method="post" enctype="multipart/form-data" action="{% url 'upload' %}">
+<form method="post" enctype="multipart/form-data" action="{% url 'upload' pk=g_id %}">
     {% csrf_token %}
     <input type="file" name="my_files" accept=".xls,.xlsm,.xlsx,.xltx, .xltm" multiple >
     <button type="submit" id="butto">Upload</button>

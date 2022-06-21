@@ -130,9 +130,9 @@ class CreateGroupForm(forms.ModelForm):
 class CreateRecepientForm(forms.ModelForm):
     class Meta:
         model = Recepient
-        fields = ['first_name', 'last_name', 'email', 'address', 'is_active', 'group']
+        fields = ['first_name', 'last_name', 'email', 'address', 'is_active']
         
-        groups = GroupName.objects.all()
+        #groups = GroupName.objects.all()
         # group = forms.ModelMultipleChoiceField(queryset=GroupName.objects, widget=forms.CheckboxSelectMultiple(attrs={
         #     'type':'checkbox',
         #     'class': 'form-check-input',
@@ -172,12 +172,12 @@ class CreateRecepientForm(forms.ModelForm):
                 'type':'checkbox',
                 'name':'Checkboxes1',      
             }),
-            'group': forms.CheckboxSelectMultiple(attrs={
-                'type': 'checkbox',
-                'class': 'select multiple',
-                'name': 'groups',
-                'id' : 'flexCheckDefault',
-                'queryset':groups
+            # 'group': forms.CheckboxSelectMultiple(attrs={
+            #     'type': 'checkbox',
+            #     'class': 'select multiple',
+            #     'name': 'groups',
+            #     'id' : 'flexCheckDefault',
+            #     'queryset':groups
                 
-            })
+            # })
          }

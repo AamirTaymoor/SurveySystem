@@ -1,5 +1,6 @@
 
 from re import template
+from tokenize import group
 from django.shortcuts import render
 # from .models import SurveyTemplates
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView, DeleteView
@@ -82,18 +83,25 @@ class RecepientView(ListView):
 
 
 
-class GroupView(ListView):
-    template_name = "surveytemplate/groupview.html"
-    paginate_by = 5
-
-    def get_queryset(self):
-        return Recepient.objects.filter(group = self.kwargs['pk']).filter(user= User.objects.get(username=self.request.user.username))
+class GroupView(View):
+    #template_name = "surveytemplate/groupview.html"
+    #paginate_by = 5
+    def get(self, request, *args, **kwargs):
+        g_id = self.kwargs['pk']
+        print(g_id)
+        page_obj = Recepient.objects.filter(group = self.kwargs['pk']).filter(user= User.objects.get(username=self.request.user.username))
+        context = {'page_obj':page_obj, 'g_id':g_id}
+        return render(request, 'surveytemplate/groupview.html', context)
+    # def get_queryset(self):
+    #     return  Recepient.objects.filter(group = self.kwargs['pk']).filter(user= User.objects.get(username=self.request.user.username))
+  
          
 
 class UploadFiles(View):
-    def get(self, request):
-        return render(request, 'surveytemplate/upload.html')
-    def post(self, request):
+    def get(self, request, *args, **kwargs):
+        g_id = self.kwargs['pk']
+        return render(request, 'surveytemplate/upload.html', {'g_id':g_id})
+    def post(self, request, *args, **kwargs):
         my_f = request.FILES.getlist('my_files')
         print(my_f)
         for f in my_f:
@@ -103,8 +111,10 @@ class UploadFiles(View):
             xx = []
             for i in data.index:
                 xx.append(data['FirstName'][i])
-                obj2, create = GroupName.objects.get_or_create(group_name = data['Group'][i], user = User.objects.get(username=self.request.user.username))
-                obj, created = Recepient.objects.get_or_create(email = data['Email'][i])
+                g = GroupName.objects.get(id = self.kwargs['pk'])
+                print(g)
+                #obj2, create = GroupName.objects.get_or_create(group_name = data['Group'][i], user = User.objects.get(username=self.request.user.username))
+                obj, created = Recepient.objects.get_or_create(email = data['Email'][i], user= self.request.user)
                 if created == True:
                     obj.user = User.objects.get(username=self.request.user.username)
                     obj.first_name = data['FirstName'][i]
@@ -113,16 +123,18 @@ class UploadFiles(View):
                     obj.address = data['Address'][i]
                     obj.is_active = data['Is_active'][i]
                     #obj2, create = GroupName.objects.get(group_name = row[6])
-                    if create == True:
-                        obj2.user = User.objects.get(username=self.request.user.username)
-                        print(obj2.user)
-                        obj2.group_name = data['Group'][i]
-                        obj2.save()
-                        obj.group.add(obj2)
-                        obj.save()
-                    else:
-                        obj.group.add(obj2)
-                        obj.save()
+                    # if create == True:
+                    #     obj2.user = User.objects.get(username=self.request.user.username)
+                    #     print(obj2.user)
+                    #     obj2.group_name = data['Group'][i]
+                    #     obj2.save()
+                    #     obj.group.add(obj2)
+                    #     obj.save()
+                    # else:
+                    #     obj.group.add(obj2)
+                    #     obj.save()
+                    obj.group.add(g)
+                    obj.save()
                     print(obj,'##########')
                     print(xx)
                     messages.success(request, f"recepient {data['FirstName'][i]} added")
@@ -130,8 +142,8 @@ class UploadFiles(View):
                 else:
                     print(len(xx),'!!!!!!!!!!!')
                     #obj.update('first_name', 'last_name', 'Address', 'is_active', )
-                    Recepient.objects.filter(email = data['Email'][i]).update(first_name = data['FirstName'][i], last_name=data['LastName'][i], address=data['Address'][i], is_active=data['Is_active'][i])
-                    obj.group.add(obj2)
+                    Recepient.objects.filter(email = data['Email'][i]).filter(user=self.request.user).update(first_name = data['FirstName'][i], last_name=data['LastName'][i], address=data['Address'][i], is_active=data['Is_active'][i])
+                    obj.group.add(g)
                     # for recp in updated_recepients:
                     #     recp.group.add(obj2)
                     messages.warning(request, f"recepient {data['FirstName'][i]} already exists")
@@ -140,8 +152,9 @@ class UploadFiles(View):
         return redirect('recepients')
 
 class DownloadRecepients(View):
-    def get(self, request):
-        results = Recepient.objects.all()
+    def get(self, request, *args, **kwargs):
+        g = GroupName.objects.get(id=self.kwargs['pk'])
+        results = Recepient.objects.filter(user=request.user).filter(group=g)
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment;filename="recepient.csv"'
         writer = csv.writer(response)
@@ -192,7 +205,7 @@ class SearchRecepients(ListView):
     #context_object_name = 'page_obj'
    
     def get_queryset(self):
-        queryset = Recepient.objects.all()
+        queryset = Recepient.objects.filter(user = self.request.user)
         queryset = queryset.filter(Q(first_name__icontains=self.request.GET['searched']) | Q(last_name__icontains=self.request.GET['searched'] ) | Q(address__icontains=self.request.GET['searched'] ) | Q(email__icontains=self.request.GET['searched']))
         return queryset
 
@@ -213,7 +226,7 @@ class SelectTemplate(ListView):
 class SelectGroups(View):
     def get(self,request,*args, **kwargs):
         template_name = kwargs['template']
-        return render(request,'surveytemplate/selectgroups.html',{'object_list':GroupName.objects.all()})
+        return render(request,'surveytemplate/selectgroups.html',{'object_list':GroupName.objects.filter(user = self.request.user)})
     
     def post(self,request,*args, **kwargs):
         #['Banks']
@@ -224,7 +237,7 @@ class SelectGroups(View):
         template = kwargs['template']
         recipients = {}
         for group_id in list_of_input_groups:
-            data = Recepient.objects.filter(group=group_id)
+            data = Recepient.objects.filter(group=group_id).filter(user=self.request.user)
             for record in data:
                 recipients[record.first_name]=record.email
 
@@ -323,15 +336,47 @@ class DeleteRecepient(DeleteView):
     model = Recepient
     success_url = '/recepients' 
 
-class CreateRecepient(CreateView):
-    """Create Recepient"""
-    model = Recepient
-    form_class = CreateRecepientForm
-    success_url = '/recepients'
-    def form_valid(self, form):
-        user = User.objects.get(username= self.request.user.username)
-        form.instance.user = user
-        return super(CreateRecepient, self).form_valid(form)
+# class CreateRecepient(CreateView):
+#     """Create Recepient"""
+#     model = Recepient
+#     form_class = CreateRecepientForm
+#     success_url = '/groups'
+    
+#     def form_valid(self, form):
+#         user = User.objects.get(username= self.request.user.username)
+#         form.instance.user = user    
+#         recp = Recepient(user=user)
+#         g = GroupName.objects.get(id = self.kwargs['pk'])
+#         recp.group.add(g)
+#         recp.save()
+#         return super(CreateRecepient, self).form_valid(form)
+#     # def post(self, request, *args, **kwargs):
+#     #     g = GroupName.objects.get(id = self.kwargs['pk'])
+#     #     self.object = self.get_object()
+#     #     #self.object.save()
+#     #     self.object.group.add(g)
+#     #     return redirect('groups')
+
+class CreateRecepient(View):
+    def post(self, request, *args, **kwargs):
+        form = CreateRecepientForm(request.POST)
+        if form.is_valid():
+            f_name = form.cleaned_data['first_name']
+            l_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+            address = form.cleaned_data['address']
+            is_active = form.cleaned_data['is_active']
+            obj = Recepient.objects.create(user=request.user,first_name=f_name, last_name=l_name, email=email, address=address,is_active=is_active)
+            g = GroupName.objects.get(id = self.kwargs['pk'])
+            obj.group.add(g)
+            obj.save()
+            print("hhhhhhhhhhhhhh")
+            return redirect('groups')
+
+    def get(self, request, *args, **kwargs):
+        form = CreateRecepientForm()
+        return render(request, 'surveytemplate/recepient_form.html',{'form':form})
+
 
 class EditRecepient(UpdateView):
     """Edit Recepient"""

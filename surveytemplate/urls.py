@@ -15,8 +15,8 @@ urlpatterns = [
 
     path('recepients/',views.RecepientView.as_view(), name='recepients'),
     path('groups/<int:pk>',views.GroupView.as_view(), name='group-view'),
-    path('upload/',views.UploadFiles.as_view(), name='upload'),
-    path('download/',views.DownloadRecepients.as_view(), name='download'),
+    path('upload/<int:pk>',views.UploadFiles.as_view(), name='upload'),
+    path('download/<int:pk>',views.DownloadRecepients.as_view(), name='download'),
     path('search/',views.SearchRecepients.as_view(), name='search'),
     path('login/',views.LoginRequestView.as_view(), name='login'),
     path('register/',views.RegisterView.as_view(), name='register'),
@@ -25,6 +25,6 @@ urlpatterns = [
     path('editgroup/<int:pk>/',views.EditGroup.as_view(), name='edit-group'),
     path('deletegroup/<int:pk>/',views.DeleteGroup.as_view(), name='delete-group'),
     path('deleterecepient/<int:pk>/',views.DeleteRecepient.as_view(), name='delete-recepient'),
-    path('createrecepient/',views.CreateRecepient.as_view(),name = 'create-recepient'),
+    path('createrecepient/<int:pk>',views.CreateRecepient.as_view(),name = 'create-recepient'),
     path('editrecepient/<int:pk>',views.EditRecepient.as_view(),name = 'edit-recepient'),
 ]
