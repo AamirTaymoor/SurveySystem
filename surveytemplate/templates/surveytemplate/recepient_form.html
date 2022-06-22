@@ -35,11 +35,11 @@
         <br>
         <div class="container">
             <div class="row">
-                <div class="form-check col-6">
+                <!-- <div class="form-check col-6">
                     <label class="form-check-label" for="flexCheckDefault">Select Group</label>
                     {{form.group}}
         
-                </div>
+                </div> -->
         
                 </br>
                 <div class="form-group mb-1 col-6">
@@ -55,7 +55,7 @@
     <div class="row">
         <div class="card-footer">
             <button type="submit" class="btn btn-primary mr-2">Save</button>
-            <a class="btn btn-primary" href="{% url 'recepients' %}" role="button">Cancel</a>
+            <a class="btn btn-primary" href="{{view.get_success_url}}" role="button">Cancel</a>
             {% comment %} <button type="button" class="btn btn-secondary" href="{% url 'recepients' %}">Cancel</button> {% endcomment %}
         </div>
     </div>

@@ -16,10 +16,7 @@
 	<div class="card-header flex-wrap py-3">
 		<div class="card-title">
 			<h3 class="card-label">
-				{{page_obj.get_group}}
-                {% for g in page_obj.get_group %}
-                    {{ g }}
-                    {% endfor %}
+				{{g_name}}
 				<span class="d-block text-muted pt-2 font-size-sm">All recepients of this group</span>
 			</h3>
 		</div>
@@ -98,8 +95,8 @@
                                           <td>{{ recp.address }}</td>
                                           <td>{{ recp.is_active }}</td>
                                           <td>
-                                            <a href="{% url 'edit-recepient' pk=recp.id%}"><i class="fas fa-edit text-success mr-5"></i></a> &nbsp       
-                                            <a href ="{% url 'delete-recepient' pk=recp.id%}"><i class="fad fa-trash text-danger mr-5"></i>
+                                            <a href="{% url 'edit-recepient' pk=recp.id pk2=g_id %}"><i class="fas fa-edit text-success mr-5"></i></a> &nbsp       
+                                            <a href ="{% url 'delete-recepient' pk=recp.id pk2=g_id %}"><i class="fad fa-trash text-danger mr-5"></i>
                                             </a>
                                          </td>
                                           <!-- <td nowrap></td> -->

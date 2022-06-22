@@ -15,7 +15,7 @@
 
         <div class="card-footer">
             <button type="submit" class="btn btn-primary mr-2">Confirm</button>
-            <a class="btn btn-primary" href="{% url 'recepients' %}" role="button">Cancel</a>
+            <a class="btn btn-primary" href="{{view.get_success_url}}" role="button">Cancel</a>
             {% comment %} <button type="button" class="btn btn-secondary" href="{% url 'recepients' %}">Cancel</button> {% endcomment %}
         </div>
 

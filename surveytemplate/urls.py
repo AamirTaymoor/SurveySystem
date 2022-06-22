@@ -24,7 +24,7 @@ urlpatterns = [
     path('creategroup/',views.CreateGroup.as_view(),name = 'create-group'),
     path('editgroup/<int:pk>/',views.EditGroup.as_view(), name='edit-group'),
     path('deletegroup/<int:pk>/',views.DeleteGroup.as_view(), name='delete-group'),
-    path('deleterecepient/<int:pk>/',views.DeleteRecepient.as_view(), name='delete-recepient'),
+    path('deleterecepient/<int:pk>/<int:pk2>',views.DeleteRecepient.as_view(), name='delete-recepient'),
     path('createrecepient/<int:pk>',views.CreateRecepient.as_view(),name = 'create-recepient'),
-    path('editrecepient/<int:pk>',views.EditRecepient.as_view(),name = 'edit-recepient'),
+    path('editrecepient/<int:pk>/<int:pk2>',views.EditRecepient.as_view(),name = 'edit-recepient'),
 ]

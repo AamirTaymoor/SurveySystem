@@ -73,7 +73,7 @@
                                               <th>Address</th>
                                               <th>Is Active</th>
                                               <th>Group Label</th>
-                                              <th>Action</th>
+                                              <!-- <th>Action</th> -->
                                   </tr>
                     </thead>
                     <tbody>
@@ -90,11 +90,11 @@
                                               {% endfor %}
                                             </td>
                                           
-                                            <td>
-                                                <a href="{% url 'edit-recepient' pk=recp.id%}"><i class="fas fa-edit text-success mr-5"></i></a> &nbsp       
-                                                <a href ="{% url 'delete-recepient' pk=recp.id%}"><i class="fad fa-trash text-danger mr-5"></i>
+                                            <!-- <td>
+                                                <a href=""><i class="fas fa-edit text-success mr-5"></i></a> &nbsp       
+                                                <a href =""><i class="fad fa-trash text-danger mr-5"></i>
                                                 </a>
-                                             </td>
+                                             </td> -->
                                           <!-- <td nowrap></td> -->
                             </tr>
                         {% endfor %}

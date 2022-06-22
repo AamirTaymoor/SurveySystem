@@ -91,7 +91,9 @@ class GroupView(View):
         g_id = self.kwargs['pk']
         print(g_id)
         page_obj = Recepient.objects.filter(group = self.kwargs['pk']).filter(user= User.objects.get(username=self.request.user.username))
-        context = {'page_obj':page_obj, 'g_id':g_id}
+        g_name = GroupName.objects.get(id = g_id).group_name
+        print(g_name)
+        context = {'page_obj':page_obj, 'g_id':g_id, 'g_name':g_name}
         return render(request, 'surveytemplate/groupview.html', context)
     # def get_queryset(self):
     #     return  Recepient.objects.filter(group = self.kwargs['pk']).filter(user= User.objects.get(username=self.request.user.username))
@@ -337,7 +339,10 @@ class DeleteGroup(DeleteView):
 class DeleteRecepient(DeleteView):
     """Delete Recepient"""
     model = Recepient
-    success_url = '/recepients' 
+    #success_url = '/recepients' 
+
+    def get_success_url(self):
+        return reverse( 'group-view', kwargs={'pk': self.kwargs['pk2']})
 
 # class CreateRecepient(CreateView):
 #     """Create Recepient"""
@@ -386,4 +391,7 @@ class EditRecepient(UpdateView):
     """Edit Recepient"""
     model = Recepient
     form_class = CreateRecepientForm
-    success_url = '/recepients'
+    #success_url = '/recepients'
+
+    def get_success_url(self):
+        return reverse( 'group-view', kwargs={'pk': self.kwargs['pk2']})
