@@ -1,0 +1,82 @@
+{% extends "surveytemplate/base.html" %}
+{% load static %}
+{% block styles %} 
+ 
+<!--begin::Page Vendors Styles(used by this page)-->
+<link href="{% static 'surveytemplate/assets/plugins/custom/datatables/datatables.bundle.css'%}" rel="stylesheet" type="text/css"/>
+<!--end::Page Vendors Styles-->
+{% endblock %}
+
+
+{% block content %}  
+<div class="container">
+<!--begin::Card-->
+<div class="card card-custom">
+	<div class="card-header flex-wrap py-5">
+		<div class="card-title">
+			<h3 class="card-label">
+				Templates
+				<span class="text-muted pt-2 font-size-sm d-block">List of all Templates.</span>
+			</h3>
+		</div>
+		<div class="card-toolbar">
+	
+<!--end::Dropdown-->
+
+<!--begin::Button-->
+<a href="{% url 'create'%}" class="btn btn-primary font-weight-bolder">
+	<i class="la la-plus"></i>
+	Create Template
+</a>
+<!--end::Button-->
+		</div>
+	</div>
+	<div class="card-body">
+		<!--begin: Datatable-->
+		<table class="table table-separate table-head-custom table-checkable" id="kt_datatable">
+			                    <thead>
+                              <tr>
+                                             
+                                              <th>Template Name</th>
+                                              <th>Subject</th>
+                                              <th>Is Active</th>
+                                              <th>Created On</th>
+                                              <th>Updated On</th>
+                                              <th>Actions</th>
+                                  </tr>
+                    </thead>
+
+                        <tbody>
+							{% for record in object_list %}
+                            <tr>
+                                              <td>{{record.template_name}}</td>  
+                                              <td>{{record.subject}}</td>
+                                              <td>{{record.is_active}}</td>
+                                              <td>{{record.created_on}}</td>
+                                              <td>{{record.updated_on}}</td>
+                                              <td><a href="{% url 'edit' record.id %}"><i class="fas fa-edit text-success mr-5"></i></a>
+                                                <a href ="{% url 'delete' record.id %}"><i class="fad fa-trash text-danger mr-5"></i>
+                                                </a>
+                                              </td>
+                                 </tr> 
+								 {% endfor %}
+                        </tbody>
+
+        		</table>
+		<!--end: Datatable-->
+	</div>
+</div>
+<!--end::Card-->  
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!--begin::Page Vendors(used by this page)-->
+<script src="{% static 'surveytemplate/assets/plugins/custom/datatables/datatables.bundle.js'%}"></script>
+<!--end::Page Vendors-->
+
+<!--begin::Page Scripts(used by this page)-->
+    <script src="{% static 'surveytemplate/assets/js/pages/crud/datatables/advanced/multiple-controls.js'%}"></script>
+<!--end::Page Scripts-->
+
+{% endblock %}

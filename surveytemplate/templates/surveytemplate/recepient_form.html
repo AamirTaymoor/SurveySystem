@@ -1,0 +1,69 @@
+{% extends "surveytemplate/base.html" %}
+
+{% block content %}      
+ <!--begin::Form-->
+ <div class="container">
+ <form method="POST" class = "bg-white">
+    <!-- Security token -->
+    {% csrf_token %}
+    <div class="card-body">	
+
+        <div class="form-group mb-1">
+            <label  class="col-2 col-form-label">First Name</label>
+            
+                {{form.first_name}}
+            
+        </div>
+        <div class="form-group mb-1">
+            <label  class="col-2 col-form-label">Last Name</label>
+            
+                {{form.last_name}}
+            
+        </div>
+        <div class="form-group mb-1">
+            <label  class="col-2 col-form-label">Email</label>
+            
+                {{form.email}}
+            
+        </div>
+        <div class="form-group mb-1">
+            <label  class="col-2 col-form-label">Address</label>
+            
+                {{form.address}}
+            
+        </div >
+        <br>
+        <div class="container">
+            <div class="row">
+                <!-- <div class="form-check col-6">
+                    <label class="form-check-label" for="flexCheckDefault">Select Group</label>
+                    {{form.group}}
+        
+                </div> -->
+        
+                </br>
+                <div class="form-group mb-1 col-6">
+                    <label class="checkbox">
+                        {{form.is_active}}
+                        <span> </span>
+                        &nbsp; Is Active
+                    </label>
+                </div>
+            </div>
+        </div>
+<hr>
+    <div class="row">
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary mr-2">Save</button>
+            <a class="btn btn-primary" href="{{view.get_success_url}}" role="button">Cancel</a>
+            {% comment %} <button type="button" class="btn btn-secondary" href="{% url 'recepients' %}">Cancel</button> {% endcomment %}
+        </div>
+    </div>
+
+</form>
+<!--end::Form-->
+</div>
+
+
+
+{% endblock %}
