@@ -23,7 +23,7 @@
 	</div>
 	<div class="card-body">
 		<!--begin::Form-->
-	<form method="POST">
+	<form method="POST" id = "sectionForm">
         {% csrf_token %}
 		<div class="card-body">
             {% for record in object_list%}
@@ -60,8 +60,9 @@
 		</div>
 	</div><br>
 		<div class="card-footer">
-			<button type="submit" class="btn btn-primary mr-2" >Next</button>
-			<button type="button" class="btn btn-secondary">Cancel</button>
+			<button type="submit" class="btn btn-primary mr-2" >Send Mail</button>
+			<!-- <button type="button" class="btn btn-secondary">Cancel</button> -->
+			<a class="btn btn-primary" href="{% url 'home' %}" role="button">Cancel</a>
 		</div>
 	</form>
 	<!--end::Form-->
@@ -79,5 +80,37 @@
 <!--begin::Page Scripts(used by this page)-->
     <script src="{% static 'surveytemplate/assets/js/pages/crud/datatables/advanced/multiple-controls.js'%}"></script>
 <!--end::Page Scripts-->
-
+<script>
+	(function() {
+		const form = document.querySelector('#sectionForm');
+		const checkboxes = form.querySelectorAll('input[type=checkbox]');
+		const checkboxLength = checkboxes.length;
+		const firstCheckbox = checkboxLength > 0 ? checkboxes[0] : null;
+	
+		function init() {
+			if (firstCheckbox) {
+				for (let i = 0; i < checkboxLength; i++) {
+					checkboxes[i].addEventListener('change', checkValidity);
+				}
+	
+				checkValidity();
+			}
+		}
+	
+		function isChecked() {
+			for (let i = 0; i < checkboxLength; i++) {
+				if (checkboxes[i].checked) return true;
+			}
+	
+			return false;
+		}
+	
+		function checkValidity() {
+			const errorMessage = !isChecked() ? 'At least one checkbox must be selected.' : '';
+			firstCheckbox.setCustomValidity(errorMessage);
+		}
+	
+		init();
+	})();
+</script>
 {% endblock %}

@@ -4,12 +4,12 @@ from tokenize import group
 from django.shortcuts import render
 # from .models import SurveyTemplates
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView, DeleteView
-from .forms import CreateTemplateForm, UserLoginForm, RegisterForm, CreateGroupForm, CreateRecepientForm
+from .forms import CreateTemplateForm, UserLoginForm, RegisterForm, CreateGroupForm, CreateRecepientForm, SurveyForm
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views import View
 from django_celery_results.models import TaskResult
-from .models import Recepient, SurveyTemplates, GroupName
+from .models import Recepient, SurveyTemplates, GroupName, Survey
 from django.views.generic import ListView, TemplateView
 from django.utils.datastructures import MultiValueDictKeyError
 import pandas as pd
@@ -222,6 +222,7 @@ class SelectTemplate(ListView):
 
     def post(self, request, *args, **kwargs):
         template = request.POST["template"]
+        print(type(template))
         return redirect('selectgroups',template ) 
     def get_queryset(self):
         queryset = SurveyTemplates.objects.filter(user= self.request.user)
@@ -251,9 +252,11 @@ class SelectGroups(View):
             if value not in final_recipients.values():
                final_recipients[key] = value
         
+        current_user = str(self.request.user)
+        print(current_user)
         
         tomorrow = datetime.utcnow() + timedelta(days = days,hours = hours ,minutes = 0,seconds = 0)
-        x = EmailTask.apply_async((final_recipients,template),eta = tomorrow)
+        x = EmailTask.apply_async((final_recipients,template, current_user),eta = tomorrow)
         print("-----------------------------------------------")
         print(x.status)
         print("-----------------------------------------------")
@@ -314,7 +317,7 @@ class LogoutRequestView(View):
 class TaskStatus(ListView):
     model = TaskResult
     template_name = 'surveytemplate/status.html'
-
+    
 class CreateGroup(CreateView):
     """Create Group"""
     model = GroupName
@@ -395,3 +398,32 @@ class EditRecepient(UpdateView):
 
     def get_success_url(self):
         return reverse( 'group-view', kwargs={'pk': self.kwargs['pk2']})
+
+class CreateSurvey(CreateView):
+    """Create Survey"""
+    model = Survey
+    form_class = SurveyForm
+    success_url = '/surveylist'
+    def form_valid(self, form):
+        user = User.objects.get(username= self.request.user.username)
+        form.instance.user = user
+        form.instance.created_by = user.username
+        return super(CreateSurvey, self).form_valid(form)
+    
+class SurveyListView(ListView):
+    """List all Surveys"""
+    model = Survey
+    template_name = "surveytemplate/listsurvey.html"
+    def get_queryset(self):
+        return Survey.objects.filter(user = User.objects.get(username = self.request.user.username))
+
+class DeleteSurvey(DeleteView):
+    """Delete Survey"""
+    model = Survey
+    success_url = '/surveylist' 
+
+class EditSurvey(UpdateView):
+    """Edit Survey"""
+    model = Survey
+    form_class = SurveyForm
+    success_url = '/surveylist'

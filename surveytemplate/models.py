@@ -1,4 +1,5 @@
 import email
+import uuid
 from email.headerregistry import Group
 from django.db import models
 from django.contrib.auth.models import User
@@ -6,7 +7,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class SurveyTemplates(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    template_name = models.CharField(max_length=40,null=False,unique=True)
+    template_name = models.CharField(max_length=40,null=False)
     subject = models.CharField(max_length=50,null=False)
     body = models.TextField()
     is_active = models.BooleanField(default=True)
@@ -39,6 +40,18 @@ class Recepient(models.Model):
 
     def get_group(self):
         return self.group.all()
+
+class Survey(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,  null=True, blank=True)
+    id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
+    name = models.CharField(max_length=50)
+    is_active = models.BooleanField(default=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+    created_by = models.CharField(max_length=50)
+
+    def _str_(self):
+        return self.name
 
 
 

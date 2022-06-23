@@ -28,7 +28,7 @@
 		<div class="card-body">
 			<div class="form-group">
 				<label for="exampleSelect1">Select Template <span class="text-danger">*</span></label>
-				<select class="form-control" id="exampleSelect1" name="template">
+				<select class="form-control" id="exampleSelect1" name="template" required>
                     {% for record in object_list%}
 					<option>{{record}}</option>
 					{% endfor %}
@@ -38,7 +38,8 @@
 		</div>
 		<div class="card-footer">
 			<button type="submit" class="btn btn-primary mr-2" >Next</button>
-			<button type="reset" class="btn btn-secondary">Cancel</button>
+			<!-- <button type="reset" class="btn btn-secondary">Cancel</button> -->
+			<a class="btn btn-primary" href="{% url 'home' %}" role="button">Cancel</a>
 		</div>
 	</form>
 	<!--end::Form-->

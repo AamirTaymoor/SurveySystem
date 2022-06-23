@@ -1,4 +1,4 @@
-from .models import GroupName, SurveyTemplates, Recepient
+from .models import GroupName, SurveyTemplates, Recepient, Survey
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
@@ -180,4 +180,23 @@ class CreateRecepientForm(forms.ModelForm):
             #     'queryset':groups
                 
             # })
+         }
+
+class SurveyForm(forms.ModelForm):
+    class Meta:
+        model = Survey
+        fields = ['name','is_active']
+        widgets = {
+            'template_name': forms.TextInput(attrs={
+            'class': 'form-control',
+            'id':"example-text-input",
+            'type' : 'text',
+            'placeholder': 'Template Name',
+            }),
+              'is_active':forms.CheckboxInput(attrs={
+                'type':'checkbox',
+                'name':'Checkboxes1',
+                
+                
+            })
          }

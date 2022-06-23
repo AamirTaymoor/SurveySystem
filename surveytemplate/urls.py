@@ -27,4 +27,9 @@ urlpatterns = [
     path('deleterecepient/<int:pk>/<int:pk2>',views.DeleteRecepient.as_view(), name='delete-recepient'),
     path('createrecepient/<int:pk>',views.CreateRecepient.as_view(),name = 'create-recepient'),
     path('editrecepient/<int:pk>/<int:pk2>',views.EditRecepient.as_view(),name = 'edit-recepient'),
+    path('createsurvey/',views.CreateSurvey.as_view(),name = 'create-survey'),
+    path('surveylist/',views.SurveyListView.as_view(),name = 'survey-list'),
+    path('deletesurvey/<str:pk>',views.DeleteSurvey.as_view(),name = 'delete-survey'),
+    path('editsurvey/<str:pk>',views.EditSurvey.as_view(),name = 'edit-survey'),
+
 ]

@@ -1,0 +1,36 @@
+{% extends "surveytemplate/base.html" %}
+
+{% block content %}      
+ <!--begin::Form-->
+ <div class="container">
+ <form method="POST" class = "bg-white">
+    <!-- Security token -->
+    {% csrf_token %}
+    <div class="card-body">	
+
+        <div class="form-group mb-1">
+            <label  class="col-2 col-form-label">Survey Name<span class="text-danger">*</span></label>
+            
+                {{form.name}}
+            
+        </div>
+        
+    </br>
+        <label class="checkbox">
+            {{form.is_active}}
+            <span> </span>
+            &nbsp; Is Active
+        </label>
+       
+
+    </br>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary mr-2">Save</button>
+            <a class="btn btn-primary" href="{% url 'survey-list' %}" role="button">Cancel</a>
+        </div>
+    </div>
+    
+</form>
+<!--end::Form-->
+</div>
+{% endblock %}
